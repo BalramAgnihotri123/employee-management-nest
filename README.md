@@ -5,6 +5,8 @@ EMPLOYEE MANAGEMENT SYSTEM
 ## Introduction
 This project focuses on performing CRUD operations with Authentication and Authorization for a company. It includes connection with RestfulAPIs with scalable nature. 
 
+The codebase contains of AuthModule and EmployeesModule as two major structures. Auth Module takes care of JWT, login, authentication and autherization stuff. The Employees Module takes care of the restApis and the employees collection in the database.
+
 ## Getting Started
 Instructions on setting up the project locally.
 
@@ -29,13 +31,13 @@ Step-by-step guide on how to get a development environment running.
 
 
 4. Enter the following creds in the .env file/ Configure your environment variables:
-
+```
 MONGODB_URI="YOUR_MONGODB_URI"
 
 JWT_EXPIRATION=864000000 # 10 days
 
 JWT_SECRET="L3JP9c6lx/18iw0zkEELSeKN8y+5+qMWAdXkwq+krTs="
-
+```
 
 5. Install NPM packages:
    ```
