@@ -35,6 +35,7 @@ export class EmployeesController {
        }
     }
 
+    @UseGuards(JwtGuard)
     @Get()
     async getAllEmployees(
         @Query() getEmployeesDto: GetEmployeesDto

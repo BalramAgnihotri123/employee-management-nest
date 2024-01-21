@@ -204,7 +204,7 @@ Explain how your project is organized and why certain design choices were made.
 ```
 ![Screenshot 3](/UpdateEmployee.png)
 
-4. To get list of all employees with filteration and validation the getEmployeesDto looks like:
+4. To get list of all employees with filteration and validation the getEmployeesDto looks like (Use Jwt access token here as well):
 ```typescript
 export class GetEmployeesDto {
     @IsString()
