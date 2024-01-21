@@ -1,10 +1,14 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { EmployeeDto, updateEmployeeDto } from './dto';
+import { EmployeeDto, GetEmployeesDto, updateEmployeeDto } from './dto';
 import mongoose from 'mongoose';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
 import { JwtDto } from 'src/auth/dto';
+import { IResponse } from 'src/common/response.interface';
+import { IPage } from 'src/common/pages.interface';
+import { Employee } from './employees.schema';
+import { EmployeeDepartment, EmployeePosition } from './employees.constants';
 
 @Controller('employees')
 export class EmployeesController {
@@ -30,6 +34,30 @@ export class EmployeesController {
             );
        }
     }
+
+    @Get()
+    async getAllEmployees(
+        @Query() getEmployeesDto: GetEmployeesDto
+    )
+        : Promise<IResponse<IPage<Employee[]>>> {
+        try {
+            console.log({getEmployeesDto})
+            const data =
+                await this.employeesService.getEmployees(getEmployeesDto);
+
+            if(!data?.data?.length) throw new NotFoundException('Employees Not Found!')
+
+            return {
+                data,
+                statusCode: HttpStatus.OK
+            };
+        }
+        catch (err) {
+            throw new HttpException(
+                err.message ?? "Internal Error",
+                err.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    };
 
     @UseGuards(JwtGuard)
     @Get('/:employeeId')

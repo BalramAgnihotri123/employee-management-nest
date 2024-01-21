@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Employee, EmployeeDocument } from './employees.schema';
 import mongoose, { Model } from 'mongoose';
-import { EmployeeDto, updateEmployeeDto } from './dto';
+import { EmployeeDto, GetEmployeesDto, updateEmployeeDto } from './dto';
 import * as bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 import { IPage } from 'src/common/pages.interface';
@@ -34,6 +34,29 @@ export class EmployeesService {
             data:restEmployee,
             accessToken
         }
+    }
+
+    async getEmployees(getEmployees?:GetEmployeesDto):Promise<IPage<Employee[] | null>> {
+        const { sortField, sortOrder, page, limit, ...restGetEmployeeDto } = getEmployees;
+
+        const sortOptions: Record<string, 1 | -1> = {};
+
+        if (sortField && sortOrder) {
+            sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1;
+        }
+
+        const skip = (page - 1) * limit;
+        // console.log({page,limit,skip, sortOptions,sortField,sortOrder})
+        const employees = await this.employeeModel.find(
+            restGetEmployeeDto, 
+            { password:0 })
+            .skip(skip)
+            .limit(limit)
+            .sort(sortOptions)
+        // console.log({employees})
+        if(!employees?.length) return null;
+
+        return { data: employees }
     }
 
     async getEmployee(employeeId:mongoose.Types.ObjectId):Promise<IPage<Employee | null>> {

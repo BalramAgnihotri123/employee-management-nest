@@ -1,5 +1,7 @@
-import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsIn, IsInt, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 import { EmployeeDepartment, EmployeePosition } from "../employees.constants";
+import { SortOrder } from "src/common/dto";
+import { Transform, Type } from "class-transformer";
 
     export class EmployeeDto {
         @IsString()
@@ -55,4 +57,42 @@ export class updateEmployeeDto {
     @IsOptional()
     @IsBoolean()
     isDeleted:boolean; //* in case of soft delete
+}
+
+export class GetEmployeesDto {
+    @IsString()
+    @IsOptional()
+    firstName?: string;
+  
+    @IsString()
+    @IsOptional()
+    lastName?: string;
+  
+    @IsEnum(EmployeeDepartment)
+    @IsOptional()
+    department?: EmployeeDepartment;
+  
+    @IsEnum(EmployeePosition)
+    @IsOptional()
+    position?: EmployeePosition;
+
+    @IsString()
+    @IsOptional()
+    @IsIn(['firstName', 'lastName', 'department', 'position', 'dateOfBirth'])
+    sortField?: string;
+  
+    @IsEnum(SortOrder)
+    @IsOptional()
+    sortOrder?: SortOrder;
+
+    @IsInt()
+    @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+    @Min(1)
+    page: number = 1;
+  
+    @IsInt()
+    @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+    @Min(0)
+    @Max(100)
+    limit: number = 10;
 }

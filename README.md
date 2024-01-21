@@ -3,9 +3,22 @@
 EMPLOYEE MANAGEMENT SYSTEM
 
 ## Introduction
-This project focuses on performing CRUD operations with Authentication and Authorization for a company. It includes connection with RestfulAPIs with scalable nature. 
+- This project focuses on performing CRUD operations with Authentication and Authorization for a company. It includes connection with RestfulAPIs with scalable nature. 
 
-The codebase contains of AuthModule and EmployeesModule as two major structures. Auth Module takes care of JWT, login, authentication and autherization stuff. The Employees Module takes care of the restApis and the employees collection in the database.
+- The codebase contains of AuthModule and EmployeesModule as two major structures. Auth Module takes care of JWT, login, authentication and autherization stuff. The Employees Module takes care of the restApis and the employees collection in the database.
+
+- JWT authentication is applied which incorporates iat, employeeId, and employeeDepartment. Have created JwtGuards and RoleGuards to ensure security of data transfer.
+
+- Pagination is applied with the option of page and limit in the get Employees api
+
+- The validation is done for the input data with the help of class-validator library and nestjs features. It includes optionality of data, type casting, range of data and other important validations 
+
+- To sort the list of employee, sortFields and sortOrder (desc, asc) is also given
+
+- To filter the data, we can use the query params of get employees api:
+```
+GET http://localhost:3000/employees/?firstName=Balram&lastName=Agnihotri&sortOrder=asc&sortField=dateOfBirth&department=TECH&page=1&limit=10
+```
 
 ## Getting Started
 Instructions on setting up the project locally.
@@ -103,6 +116,64 @@ Detailed description of the API endpoints.
 - **Endpoint:** `http://localhost:3000/employees/:employeeId` (DELETE)
 - **Description:** Delete a specific employee by their ID.
 
+### 5. Get Employees
+- **Endpoint:** `http://localhost:3000/employees` (GET)
+- **Query Parameters:**
+```
+firstName (Optional): Filter by first name.
+lastName (Optional): Filter by last name.
+sortOrder (Optional): Sorting order, either "asc" or "desc".
+sortField (Optional): Field to sort by.
+department (Optional): Filter by department.
+page (Optional): Page number.
+limit (Optional): Number of items per page.
+```
+- **Description:** Retrieve a list of employees with optional filters, sorting, and pagination.
+
+``` typescript
+import { IsString, IsOptional, IsEnum, IsInt, Min, Max, IsIn } from 'class-validator';
+import { Transform } from 'class-transformer';
+
+enum SortOrder {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export class GetEmployeesDto {
+  @IsString()
+  @IsOptional()
+  firstName?: string;
+
+  @IsString()
+  @IsOptional()
+  lastName?: string;
+
+  @IsEnum(EmployeeDepartment)
+  @IsOptional()
+  department?: EmployeeDepartment;
+
+  @IsEnum(SortOrder)
+  @IsOptional()
+  sortOrder?: SortOrder;
+
+  @IsString()
+  @IsOptional()
+  @IsIn(['firstName', 'lastName', 'department']) // Add other fields as needed
+  sortField?: string;
+
+  @IsInt()
+  @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+  @Min(1)
+  page: number = 1;
+
+  @IsInt()
+  @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+  @Min(1)
+  @Max(100)
+  limit: number = 10;
+}
+```
+
 ## Code Structure and Design Decisions
 Explain how your project is organized and why certain design choices were made.
 
@@ -133,7 +204,49 @@ Explain how your project is organized and why certain design choices were made.
 ```
 ![Screenshot 3](/UpdateEmployee.png)
 
-4. To delete an employee(with id and accessToken):
+4. To get list of all employees with filteration and validation the getEmployeesDto looks like:
+```typescript
+export class GetEmployeesDto {
+    @IsString()
+    @IsOptional()
+    firstName?: string;
+  
+    @IsString()
+    @IsOptional()
+    lastName?: string;
+  
+    @IsEnum(EmployeeDepartment)
+    @IsOptional()
+    department?: EmployeeDepartment;
+  
+    @IsEnum(EmployeePosition)
+    @IsOptional()
+    position?: EmployeePosition;
+
+    @IsString()
+    @IsOptional()
+    @IsIn(['firstName', 'lastName', 'department', 'position', 'dateOfBirth'])
+    sortField?: string;
+  
+    @IsEnum(SortOrder)
+    @IsOptional()
+    sortOrder?: SortOrder;
+
+    @IsInt()
+    @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+    @Min(1)
+    page: number = 1;
+  
+    @IsInt()
+    @Transform(({ value }) => (value !== undefined ? parseInt(String(value), 10) : undefined))
+    @Min(0)
+    @Max(100)
+    limit: number = 10;
+  }
+```
+![Screenshot 4](/GetEmployees.png)
+
+5. To delete an employee(with id and accessToken):
 ![Screenshot 4](/DeleteEmployee.png)
 <!-- 
 ## Contributing
