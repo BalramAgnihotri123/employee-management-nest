@@ -22,13 +22,15 @@ Step-by-step guide on how to get a development environment running.
    ```
    cd employee-management-nest/
    ```
-3. Make .env file inside employee-management-nest/:
+3. Make .env file inside employee-management-nest/
+
 4. Enter the following creds in the .env file/ Configure your environment variables.:
    ```
   MONGODB_URI = "YOUR_MONGODB_URI"
   JWT_EXPIRATION = 864000000 #? 10days
   JWT_SECRET = "L3JP9c6lx/18iw0zkEELSeKN8y+5+qMWAdXkwq+krTs="
    ```
+
 5. Install NPM packages:
    ```
    npm i
@@ -97,7 +99,7 @@ Detailed description of the API endpoints.
 Explain how your project is organized and why certain design choices were made.
 
 ## Screenshots
-To create employee give body like: 
+1. To create employee give body like: 
 ```
 {
     "firstName":"Balram",
@@ -110,10 +112,10 @@ To create employee give body like:
 ```
 ![Screenshot 1](/CreateEmployee.png)
 
-To get an employee give the recieved employeeId and accessToken to be used as bearer token in the headers of all the below apis
+2. To get an employee give the recieved employeeId and accessToken to be used as bearer token in the headers of all the below apis
 ![Screenshot 2](/GetEmployee.png)
 
-To update the employee details (also give the JWT access token):
+3. To update the employee details with body same as create (also give the JWT access token):
 ```
 {
     "dateOfBirth":1069612200000,
@@ -123,7 +125,7 @@ To update the employee details (also give the JWT access token):
 ```
 ![Screenshot 3](/UpdateEmployee.png)
 
-To delete an employee(with id and accessToken):
+4. To delete an employee(with id and accessToken):
 ![Screenshot 4](/DeleteEmployee.png)
 <!-- 
 ## Contributing
