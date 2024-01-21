@@ -22,7 +22,10 @@ Step-by-step guide on how to get a development environment running.
    ```
    cd employee-management-nest/
    ```
-3. Make .env file inside employee-management-nest/
+3. Make .env file inside employee-management-nest/:
+   ```
+    create file named .env according to your system.
+   ```
 
 4. Enter the following creds in the .env file/ Configure your environment variables.:
    ```
