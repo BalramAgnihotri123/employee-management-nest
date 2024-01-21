@@ -24,10 +24,7 @@ Step-by-step guide on how to get a development environment running.
 3. Make .env file inside employee-management-nest/:
 4. Enter the following creds in the .env file/ Configure your environment variables.:
    ```
-   #* mongodb creds
   MONGODB_URI = "YOUR_MONGODB_URI"
-
-  #*JWT creds
   JWT_EXPIRATION = 864000000 #? 10days
   JWT_SECRET = "L3JP9c6lx/18iw0zkEELSeKN8y+5+qMWAdXkwq+krTs="
    ```
@@ -101,10 +98,10 @@ Explain how your project is organized and why certain design choices were made.
 ## Screenshots
 Include screenshots of your project here.
 
-![Screenshot 1](\CreateEmployee.png)
-![Screenshot 2](\GetEmployee.png)
-![Screenshot 3](\UpdateEmployee.png)
-![Screenshot 4](\DeleteEmployee.png)
+![Screenshot 1](/CreateEmployee.png)
+![Screenshot 2](/GetEmployee.png)
+![Screenshot 3](/UpdateEmployee.png)
+![Screenshot 4](/DeleteEmployee.png)
 <!-- 
 ## Contributing
 Information on how others can contribute to your project.
