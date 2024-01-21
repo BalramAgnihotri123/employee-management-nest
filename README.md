@@ -174,9 +174,6 @@ export class GetEmployeesDto {
 }
 ```
 
-## Code Structure and Design Decisions
-Explain how your project is organized and why certain design choices were made.
-
 ## Screenshots
 1. To create employee give body like: 
 ```
