@@ -1,5 +1,6 @@
 
 # Project Title
+EMPLOYEE MANAGEMENT SYSTEM
 
 ## Introduction
 This project focuses on performing CRUD operations with Authentication and Authorization for a company. It includes connection with RestfulAPIs with scalable nature. 
@@ -96,11 +97,33 @@ Detailed description of the API endpoints.
 Explain how your project is organized and why certain design choices were made.
 
 ## Screenshots
-Include screenshots of your project here.
-
+To create employee give body like: 
+```
+{
+    "firstName":"Balram",
+    "lastName":"Agnihotri",
+    "password":"abcdef",
+    "dateOfBirth":1069612200000,
+    "position":"ASSOCIATE",
+    "department":"TECH"
+}
+```
 ![Screenshot 1](/CreateEmployee.png)
+
+To get an employee give the recieved employeeId and accessToken to be used as bearer token in the headers of all the below apis
 ![Screenshot 2](/GetEmployee.png)
+
+To update the employee details (also give the JWT access token):
+```
+{
+    "dateOfBirth":1069612200000,
+    "position":"ASSOCIATE",
+    "department":"TECH"
+}
+```
 ![Screenshot 3](/UpdateEmployee.png)
+
+To delete an employee(with id and accessToken):
 ![Screenshot 4](/DeleteEmployee.png)
 <!-- 
 ## Contributing
