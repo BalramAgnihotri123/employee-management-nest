@@ -28,11 +28,10 @@ Step-by-step guide on how to get a development environment running.
    ```
 
 4. Enter the following creds in the .env file/ Configure your environment variables.:
-   ```
-  MONGODB_URI = "YOUR_MONGODB_URI"
-  JWT_EXPIRATION = 864000000 #? 10days
-  JWT_SECRET = "L3JP9c6lx/18iw0zkEELSeKN8y+5+qMWAdXkwq+krTs="
-   ```
+
+MONGODB_URI="YOUR_MONGODB_URI"
+JWT_EXPIRATION=864000000 # 10 days
+JWT_SECRET="L3JP9c6lx/18iw0zkEELSeKN8y+5+qMWAdXkwq+krTs="
 
 5. Install NPM packages:
    ```
